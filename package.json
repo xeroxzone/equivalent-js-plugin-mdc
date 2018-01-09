@@ -33,7 +33,7 @@
     "qunit": "^2.4.1",
     "jsdoc": "^3.5.5",
     "ink-docstrap": "^1.3.2",
-    "equivalent-js": "^0.2.10"
+    "equivalent-js": "^0.2.11"
   },
   "keywords": [
     "equivalent-js",
