@@ -1,5 +1,7 @@
 # EquivalentJS Plugin MDC
 
+-- ONLY PLACEHOLDERS awaiting description --
+
 Introduction
 
 Material Components abstraction
