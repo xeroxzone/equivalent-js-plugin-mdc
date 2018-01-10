@@ -110,7 +110,7 @@ function install(cfg) {
         typeof cfg.classes.dest === 'string'
     ) {
         var pluginPath = '';
-        if ('plugin.json' === cfg.config) {
+        if (-1 < cfg.config.indexOf('plugin.json')) {
             pluginPath = '/' + pluginConfig.name;
         }
 
