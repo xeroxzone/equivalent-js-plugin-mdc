@@ -149,7 +149,12 @@ function install(cfg) {
  * @returns {Gulp}
  */
 function buildVendors(cfg) {
-    return build(cfg);
+    return gulp.src(cfg.src)
+            .pipe(plumber())
+                .pipe(concat(cfg.name))
+            .pipe(plumber.stop())
+        .pipe(gulp.dest(cfg.dest))
+    ;
 }
 
 /**
