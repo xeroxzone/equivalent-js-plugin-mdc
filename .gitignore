@@ -31,5 +31,6 @@ fabric.properties
 /node_modules/
 /npm-debug.log
 /web/css/
-/web/js/
 /web/doc/
+/web/html/
+/web/js/

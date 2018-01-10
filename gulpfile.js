@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @type {Gulp} gulp
+ * @type {Gulp}
  */
 var gulp = require('gulp');
 var sass = require('gulp-sass');
@@ -18,7 +18,6 @@ var pluginConfig = require('./plugin.json');
 
 var APP_CLASS_PATH = './node_modules/equivalent-js/src';
 var APP_STYLE_PATH = '';
-var APP_TEMPLATE_PATH = '';
 var LIB_CLASS_PATH = './node_modules/equivalent-js/src';
 
 var SASS_INCLUDE_PATHS = [
@@ -73,7 +72,7 @@ function buildConcat(cfg, builder, base) {
 }
 
 /**
- * @param {{config: string, classes: Object, tests: Object, styles: Object}} cfg
+ * @param {{config: string, classes: Object, tests: Object, styles: Object, templates: Object}} cfg
  */
 function install(cfg) {
     var installScripts = function (src, dest, base) {
@@ -99,6 +98,11 @@ function install(cfg) {
                 .pipe(sourcemaps.write())
             .pipe(plumber.stop())
         .pipe(gulp.dest(dest));
+    };
+
+    var installTemplates = function (src, dest) {
+        return gulp.src(src)
+            .pipe(gulp.dest(dest));
     };
 
     if (cfg.hasOwnProperty('config') &&
@@ -127,6 +131,14 @@ function install(cfg) {
                 }
 
                 installStyles(cfg.styles.src, cfg.styles.dest + pluginPath);
+            }
+
+            if (0 < cfg.templates.src.length) {
+                if ('' !== pluginPath) {
+                    pluginPath += '/' + pluginConfig.classPath;
+                }
+
+                installTemplates(cfg.templates.src, cfg.templates.dest + pluginPath);
             }
         }
     }
@@ -175,7 +187,7 @@ function buildConfigs(cfg) {
 }
 
 /**
- * @param {{config: string, classes: Object, tests: Object, styles: Object}} cfg
+ * @param {{config: string, classes: Object, tests: Object, styles: Object, templates: Object}} cfg
  * @returns {Gulp}
  */
 function buildPlugins(cfg) {
@@ -228,15 +240,6 @@ function buildStyles(cfg) {
     .pipe(gulp.dest(cfg.dest));
 }
 
-/**
- * @param {Object} cfg
- * @returns {Gulp}
- */
-function buildTemplates(cfg) {
-    return gulp.src(cfg.src, {base: APP_TEMPLATE_PATH})
-        .pipe(gulp.dest(cfg.dest));
-}
-
 /* dev */
 gulp.task('dev:scripts', function() {
     del(['web/js/lib/*.js', 'web/js/lib/**/*.js']).then(function () {
@@ -271,12 +274,6 @@ gulp.task('dev:tests', function() {
 gulp.task('dev:styles', function() {
     del(['web/css/*.css', 'web/css/**/*.css']).then(function () {
         buildStyles(config.styles);
-    });
-});
-
-gulp.task('dev:templates', function() {
-    del(['web/html/**.html']).then(function () {
-        buildTemplates(config.templates);
     });
 });
 
@@ -332,14 +329,6 @@ gulp.task('dev:watch:styles', function() {
     });
 });
 
-gulp.task('dev:watch:templates', function() {
-    return watch(config.templates.src, function () {
-        del(['web/html/**.html']).then(function () {
-            buildTemplates(config.templates);
-        });
-    });
-});
-
 gulp.task('dev:watch:docs:scripts', function() {
     return watch(config.scripts.src, function (callback) {
         del(['web/doc/**']).then(function () {
@@ -368,7 +357,6 @@ gulp.task('prod:build', function() {
             buildConcatScripts(config.minify);
             buildConcatApps(config.minifyApps);
             buildStyles(config.styles);
-            buildTemplates(config.templates);
         });
     });
 });
@@ -381,7 +369,6 @@ gulp.task('dev', [
     'dev:apps',
     'dev:tests',
     'dev:styles',
-    'dev:templates',
     'dev:docs'
 ]);
 
@@ -392,7 +379,6 @@ gulp.task('dev:watch', [
     'dev:watch:apps',
     'dev:watch:tests',
     'dev:watch:styles',
-    'dev:watch:templates',
     'dev:watch:docs:scripts',
     'dev:watch:docs:apps'
 ]);

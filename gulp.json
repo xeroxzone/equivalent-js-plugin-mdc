@@ -41,31 +41,63 @@
   "plugins" : {
     "config": "node_modules/equivalent-js-plugin-*/plugin.json",
     "classes" : {
-      "src": "node_modules/equivalent-js-plugin-*/src/lib/**.js",
+      "src": [
+        "node_modules/equivalent-js-plugin-*/src/lib/*.js",
+        "node_modules/equivalent-js-plugin-*/src/lib/**/*.js"
+      ],
       "dest": "web/js/lib/equivalent/Plugin"
     },
     "tests": {
-      "src": "node_modules/equivalent-js-plugin-*/src/test/lib/**.js",
+      "src": [
+        "node_modules/equivalent-js-plugin-*/src/test/lib/*.js",
+        "node_modules/equivalent-js-plugin-*/src/test/lib/**/*.js"
+      ],
       "dest": "web/js/test/lib/equivalent/Plugin"
     },
     "styles": {
-      "src": "node_modules/equivalent-js-plugin-*/src/lib/**.scss",
+      "src": [
+        "node_modules/equivalent-js-plugin-*/src/lib/*.scss",
+        "node_modules/equivalent-js-plugin-*/src/lib/**/*.scss"
+      ],
       "dest": "web/css/Plugin"
+    },
+    "templates": {
+      "src": [
+        "node_modules/equivalent-js-plugin-*/src/lib/*.html",
+        "node_modules/equivalent-js-plugin-*/src/lib/**/*.html"
+      ],
+      "dest": "web/html/Plugin"
     }
   },
   "pluginDev" : {
     "config": "plugin.json",
     "classes": {
-      "src": "src/lib/**.js",
+      "src": [
+        "src/lib/*.js",
+        "src/lib/**/*.js"
+      ],
       "dest": "web/js/lib/equivalent/Plugin"
     },
     "tests": {
-      "src": "src/test/lib/**.js",
+      "src": [
+        "src/test/lib/*.js",
+        "src/test/lib/**/*.js"
+      ],
       "dest": "web/js/test/lib/equivalent/Plugin"
     },
     "styles": {
-      "src": "src/lib/**.scss",
+      "src": [
+        "src/lib/*.scss",
+        "src/lib/**/*.scss"
+      ],
       "dest": "web/css/Plugin"
+    },
+    "templates": {
+      "src": [
+        "src/lib/*.html",
+        "src/lib/**/*.html"
+      ],
+      "dest": "web/html/Plugin"
     }
   },
   "apps" : {
@@ -89,12 +121,6 @@
       "node_modules/material-components-web/dist/material-components-web.min.css"
     ],
     "dest" : "web/css"
-  },
-  "templates": {
-    "src": [
-      "src/app/**/*.html"
-    ],
-    "dest": "web/html"
   },
   "minify": {
     "name": "equivalent.min.js",
