@@ -33,7 +33,7 @@
     "qunit": "^2.4.1",
     "jsdoc": "^3.5.5",
     "ink-docstrap": "^1.3.2",
-    "equivalent-js": "git+https://github.com/xeroxzone/equivalent-js.git#0.2.12-dev"
+    "equivalent-js": "^0.2.12"
   },
   "keywords": [
     "equivalent-js",
