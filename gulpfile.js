@@ -39,10 +39,10 @@ function build(cfg, builder, base) {
 
     if (null !== builder) {
         wrap.pipe(plumber())
-            .pipe(sourcemaps.init())
-                .pipe(builder)
-            .pipe(sourcemaps.write())
-        .pipe(plumber.stop());
+                .pipe(sourcemaps.init())
+                    .pipe(builder)
+                .pipe(sourcemaps.write())
+            .pipe(plumber.stop());
     }
 
     wrap.pipe(gulp.dest(cfg.dest));
@@ -67,8 +67,7 @@ function buildConcat(cfg, builder, base) {
                     .pipe(builder)
                 .pipe(sourcemaps.write())
             .pipe(plumber.stop())
-        .pipe(gulp.dest(cfg.dest))
-    ;
+        .pipe(gulp.dest(cfg.dest));
 }
 
 /**
@@ -77,12 +76,12 @@ function buildConcat(cfg, builder, base) {
 function install(cfg) {
     var installScripts = function (src, dest, base) {
         return gulp.src(src, {base: base})
-            .pipe(plumber())
-                .pipe(sourcemaps.init())
-                    .pipe(uglify())
-                .pipe(sourcemaps.write())
-            .pipe(plumber.stop())
-        .pipe(gulp.dest(dest));
+                .pipe(plumber())
+                    .pipe(sourcemaps.init())
+                        .pipe(uglify())
+                    .pipe(sourcemaps.write())
+                .pipe(plumber.stop())
+            .pipe(gulp.dest(dest));
     };
 
     var installConfigs = function (src, dest) {
@@ -92,12 +91,12 @@ function install(cfg) {
 
     var installStyles = function (src, dest) {
         return gulp.src(src)
-            .pipe(plumber())
-                .pipe(sourcemaps.init())
-                    .pipe(sass({includePaths: SASS_INCLUDE_PATHS, outputStyle: 'compressed'}))
-                .pipe(sourcemaps.write())
-            .pipe(plumber.stop())
-        .pipe(gulp.dest(dest));
+                .pipe(plumber())
+                    .pipe(sourcemaps.init())
+                        .pipe(sass({includePaths: SASS_INCLUDE_PATHS, outputStyle: 'compressed'}))
+                    .pipe(sourcemaps.write())
+                .pipe(plumber.stop())
+            .pipe(gulp.dest(dest));
     };
 
     var installTemplates = function (src, dest) {
@@ -109,20 +108,24 @@ function install(cfg) {
         typeof cfg.config === 'string' &&
         typeof cfg.classes.dest === 'string'
     ) {
-        var pluginPath = '';
-        if (-1 < cfg.config.indexOf('plugin.json')) {
+        var pluginPath = '',
+            pluginBaseDir = ''
+        ;
+
+        if ('plugin.json' === cfg.config) {
             pluginPath = '/' + pluginConfig.name;
+            pluginBaseDir = '.';
         }
 
         if (0 < cfg.config.length) {
             installConfigs(cfg.config, cfg.classes.dest + pluginPath);
 
             if (0 < cfg.classes.src.length) {
-                installScripts(cfg.classes.src, cfg.classes.dest + pluginPath, '.');
+                installScripts(cfg.classes.src, cfg.classes.dest + pluginPath, pluginBaseDir);
             }
 
             if (0 < cfg.tests.src.length) {
-                installScripts(cfg.tests.src, cfg.tests.dest + pluginPath, '.');
+                installScripts(cfg.tests.src, cfg.tests.dest + pluginPath, pluginBaseDir);
             }
 
             if (0 < cfg.styles.src.length) {
@@ -153,8 +156,7 @@ function buildVendors(cfg) {
             .pipe(plumber())
                 .pipe(concat(cfg.name))
             .pipe(plumber.stop())
-        .pipe(gulp.dest(cfg.dest))
-    ;
+        .pipe(gulp.dest(cfg.dest));
 }
 
 /**
@@ -237,13 +239,14 @@ function buildConcatScripts(cfg) {
  */
 function buildStyles(cfg) {
     return gulp.src(cfg.src, {base: APP_STYLE_PATH})
-        .pipe(plumber())
-            .pipe(sourcemaps.init())
-                .pipe(sass({includePaths: SASS_INCLUDE_PATHS, outputStyle: 'compressed'}))
-            .pipe(sourcemaps.write())
-        .pipe(plumber.stop())
-    .pipe(gulp.dest(cfg.dest));
+            .pipe(plumber())
+                .pipe(sourcemaps.init())
+                    .pipe(sass({includePaths: SASS_INCLUDE_PATHS, outputStyle: 'compressed'}))
+                .pipe(sourcemaps.write())
+            .pipe(plumber.stop())
+        .pipe(gulp.dest(cfg.dest));
 }
+
 
 /* dev */
 gulp.task('dev:scripts', function() {
