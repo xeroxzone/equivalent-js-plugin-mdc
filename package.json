@@ -1,6 +1,6 @@
 {
   "name": "equivalent-js-plugin-mdc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A material components wrapper plugin",
   "main": "./node_modules/equivalent-js/src/lib/equivalent.js",
   "scripts": {
