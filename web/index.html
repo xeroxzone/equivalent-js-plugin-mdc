@@ -12,14 +12,13 @@
         <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#2780e3">
         <link rel="stylesheet" href="css/material-components-web.css">
         <link rel="stylesheet" href="css/load.css">
-        <script src="js/lib/jquery.min.js"></script>
-        <script src="js/lib/material-components-web.js"></script>
+        <script src="js/lib/vendors.min.js"></script>
     </head>
     <body class="mdc-typography" data-application="DemoApp.Viewport">
 
-        <aside class="mdc-persistent-drawer">
-            <nav class="mdc-persistent-drawer__drawer">
-                <div class="mdc-persistent-drawer__toolbar-spacer"></div>
+        <aside class="mdc-drawer mdc-drawer--persistent">
+            <nav class="mdc-drawer__drawer">
+                <div class="mdc-drawer__toolbar-spacer"></div>
                 <div class="mdc-list-group">
                     <nav class="mdc-list">
                         <a data-application="DemoApp.tool.Tests" data-parameters='{"filter":"Plugin"}' class="mdc-list-item" href="#">
